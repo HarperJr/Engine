@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="jsquish">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/jsquish/jsquish.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/libs/jsquish/jsquish.jar!/" />
+    </SOURCES>
+  </library>
+</component>
