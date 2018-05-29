@@ -1,0 +1,86 @@
+# This file uses meters as units for non-parametric coordinates.
+# materials : 12
+
+newmtl material0
+ Ka 0.5000 0.1000 0.5000
+ Kd 1.0000 1.0000 1.0000
+ illum 1
+ map_Ka act/newduty/maska_co.dds
+ map_Kd act/newduty/maska_co.dds
+
+newmtl material1
+ Ka 0.5000 0.1000 0.5000
+ Kd 1.0000 1.0000 1.0000
+ illum 1
+ map_Ka act/newduty/act_broneshlem_ris.dds
+ map_Kd act/newduty/act_broneshlem_ris.dds
+
+newmtl material2
+ Ka 0.5000 0.1000 0.5000
+ Kd 1.0000 1.0000 1.0000
+ illum 1
+ map_Ka act/newduty/act_broneshlem_ris.dds
+ map_Kd act/newduty/act_broneshlem_ris.dds
+
+newmtl material3
+ Ka 0.5000 0.1000 0.5000
+ Kd 1.0000 1.0000 1.0000
+ illum 1
+ map_Ka act/newloner/act34_head_mask.dds
+ map_Kd act/newloner/act34_head_mask.dds
+
+newmtl material4
+ Ka 0.5000 0.1000 0.5000
+ Kd 1.0000 1.0000 1.0000
+ illum 1
+ map_Ka act/newduty/rus_chestrig_duty.dds
+ map_Kd act/newduty/rus_chestrig_duty.dds
+
+newmtl material5
+ Ka 0.5000 0.1000 0.5000
+ Kd 1.0000 1.0000 1.0000
+ illum 1
+ map_Ka act/newduty/rus_vest_duty.dds
+ map_Kd act/newduty/rus_vest_duty.dds
+
+newmtl material6
+ Ka 0.5000 0.1000 0.5000
+ Kd 1.0000 1.0000 1.0000
+ illum 1
+ map_Ka act/newduty/gorka_jacket.dds
+ map_Kd act/newduty/gorka_jacket.dds
+
+newmtl material7
+ Ka 0.5000 0.1000 0.5000
+ Kd 1.0000 1.0000 1.0000
+ illum 1
+ map_Ka act/newloner/militaryboots_black_co.dds
+ map_Kd act/newloner/militaryboots_black_co.dds
+
+newmtl material8
+ Ka 0.5000 0.1000 0.5000
+ Kd 1.0000 1.0000 1.0000
+ illum 1
+ map_Ka act/newduty/ruskygear2_duty.dds
+ map_Kd act/newduty/ruskygear2_duty.dds
+
+newmtl material9
+ Ka 0.5000 0.1000 0.5000
+ Kd 1.0000 1.0000 1.0000
+ illum 1
+ map_Ka act/newduty/gorka_pants.dds
+ map_Kd act/newduty/gorka_pants.dds
+
+newmtl material10
+ Ka 0.5000 0.1000 0.5000
+ Kd 1.0000 1.0000 1.0000
+ illum 1
+ map_Ka act/newloner/hhl_m_latino01_001_light_co.dds
+ map_Kd act/newloner/hhl_m_latino01_001_light_co.dds
+
+newmtl material11
+ Ka 0.5000 0.5000 0.5000
+ Kd 1.0000 1.0000 1.0000
+ illum 1
+ map_Ka act/newloner/workinggloves_black_co.dds
+ map_Kd act/newloner/workinggloves_black_co.dds

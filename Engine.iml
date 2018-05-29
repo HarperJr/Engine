@@ -16,11 +16,8 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="lwjgl" level="project" />
-    <orderEntry type="library" name="lwjgl1" level="project" />
-    <orderEntry type="library" name="lwjgl-opengl" level="project" />
-    <orderEntry type="library" name="lwjgl-glfw" level="project" />
-    <orderEntry type="library" name="jogl-all" level="project" />
     <orderEntry type="library" name="jsquish" level="project" />
+    <orderEntry type="library" name="lwjgl-opengl" level="project" />
+    <orderEntry type="library" name="dds-lwjgl" level="project" />
   </component>
 </module>

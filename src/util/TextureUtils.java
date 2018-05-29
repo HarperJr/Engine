@@ -1,9 +1,12 @@
 package util;
 
 import main.Config;
-import main.ResourceLoader;
+import main.Resources;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
+import util.readers.DDSReader;
+import util.readers.TargaReader;
+
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -14,33 +17,31 @@ import java.util.HashMap;
 
 public final class TextureUtils {
 
-    private static final String STANDARD = "Standard";
+    public static final int STANDARD;
     private final static HashMap<String, Integer> textures = new HashMap<>();
 
-    public static int getStandard() {
-        return getTexture(STANDARD);
-    }
-
     public static int getTexture(String path) {
-        if (textures.containsKey(path)) return textures.get(path);
-        try {
-            loadTexture(path);
+        if (textures.containsKey(path)) {
             return textures.get(path);
+        }
+
+        try {
+            if (path.contains("\\u005C")) {
+                path.replace("\\u005C", "\\u002F");
+            }
+
+            BufferedImage image = getTextureBuffered(path.trim());
+            int i = GL11.glGenTextures();
+            loadTexture(image, i);
+            textures.put(path, i);
+
+            return i;
+
         } catch (IOException ex) {
             ex.printStackTrace();
         }
 
-        return getStandard();
-    }
-
-    public static void loadTexture(String path) throws IOException {
-        if (textures.containsKey(path)) return;
-
-        BufferedImage image = getTextureBuffered(path);
-        int i = GL11.glGenTextures();
-        loadTexture(image, i);
-
-        textures.put(path, i);
+        return STANDARD;
     }
 
     private static void loadTexture(BufferedImage image, int textureId) {
@@ -75,26 +76,33 @@ public final class TextureUtils {
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, 0);
     }
 
+    private static void generateMiMaps(BufferedImage image) {
+
+    }
+
     private static BufferedImage getTextureBuffered(String path) throws IOException {
+        try (InputStream stream = Resources.getResource(Config.getAttribute("src-tex") + path)) {
+            if (stream == null) throw new IOException("Unable to find texture " + path);
 
-        if (path.equals(STANDARD)) {
-            BufferedImage standard = new BufferedImage(8, 8, BufferedImage.TYPE_4BYTE_ABGR);
-            Graphics g = standard.getGraphics();
-            g.setColor(Color.lightGray);
-            g.fillRect(0, 0, standard.getWidth(), standard.getHeight());
-            g.dispose();
-            return standard;
+            if (path.endsWith(".tga")) {
+                return TargaReader.read(stream);
+            }
+            if (path.endsWith(".dds")) {
+                return DDSReader.read(stream);
+            }
+
+            return ImageIO.read(stream);
         }
+    }
 
-        InputStream stream = ResourceLoader.getResource(Config.getAttribute("src-tex") + path);
-        if (stream == null) throw new IOException("Unable to find texture " + path);
+    static {
+        final BufferedImage standard = new BufferedImage(8, 8, BufferedImage.TYPE_4BYTE_ABGR);
+        final Graphics g = standard.getGraphics();
+        g.setColor(Color.lightGray);
+        g.fillRect(0, 0, standard.getWidth(), standard.getHeight());
+        g.dispose();
 
-        if (path.endsWith(".tga")) {
-            return TargaReader.read(stream);
-        }else if (path.endsWith(".dds")) {
-            return DDSReader.read(stream);
-        }
-
-        return ImageIO.read(stream);
+        STANDARD = GL11.glGenTextures();
+        loadTexture(standard, STANDARD);
     }
 }
