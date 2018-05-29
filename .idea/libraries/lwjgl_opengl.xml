@@ -1,16 +1,36 @@
 <component name="libraryTable">
   <library name="lwjgl-opengl">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/libs/lwjgl-opengl/lwjgl-opengl.jar!/" />
-      <root url="jar://$PROJECT_DIR$/libs/lwjgl-opengl/lwjgl-opengl-natives-windows.jar!/" />
-      <root url="jar://$PROJECT_DIR$/libs/lwjgl-opencl/lwjgl-opencl.jar!/" />
-      <root url="jar://$PROJECT_DIR$/libs/lwjgl-openal/lwjgl-openal.jar!/" />
-      <root url="jar://$PROJECT_DIR$/libs/lwjgl-openal/lwjgl-openal-natives-windows.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/lwjgl-custom/lwjgl-opengl.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/lwjgl-custom/lwjgl-stb.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/lwjgl-custom/lwjgl-stb-natives-linux.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/lwjgl-custom/lwjgl-openvr.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/lwjgl-custom/lwjgl-openvr-natives-linux.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/lwjgl-custom/lwjgl-opengles.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/lwjgl-custom/lwjgl-opengles-natives-linux.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/lwjgl-custom/lwjgl.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/lwjgl-custom/lwjgl-opengl-natives-linux.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/lwjgl-custom/lwjgl-opencl.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/lwjgl-custom/lwjgl-openal.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/lwjgl-custom/lwjgl-openal-natives-linux.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/lwjgl-custom/lwjgl-natives-linux.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/lwjgl-custom/lwjgl-glfw.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/lwjgl-custom/lwjgl-glfw-natives-linux.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/lwjgl-custom/lwjgl-assimp.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/lwjgl-custom/lwjgl-assimp-natives-linux.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/lwjgl-custom/joml-1.9.9.jar!/" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://$PROJECT_DIR$/libs/lwjgl-opengl/lwjgl-opengl-javadoc.jar!/" />
-      <root url="jar://$PROJECT_DIR$/libs/lwjgl-opencl/lwjgl-opencl-javadoc.jar!/" />
-      <root url="jar://$PROJECT_DIR$/libs/lwjgl-openal/lwjgl-openal-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/lwjgl-custom/lwjgl-stb-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/lwjgl-custom/lwjgl-openvr-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/lwjgl-custom/lwjgl-opengl-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/lwjgl-custom/lwjgl-opengles-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/lwjgl-custom/lwjgl-opencl-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/lwjgl-custom/lwjgl-openal-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/lwjgl-custom/lwjgl-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/lwjgl-custom/lwjgl-glfw-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/lwjgl-custom/lwjgl-assimp-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/lwjgl-custom/joml-1.9.9-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES />
   </library>

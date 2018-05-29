@@ -2,10 +2,6 @@ package shaders;
 
 public class ShaderShadows extends Shader {
 
-    public ShaderShadows(String n) {
-        super(n);
-    }
-
     @Override
     protected void bindAttributes() {
 
@@ -14,5 +10,10 @@ public class ShaderShadows extends Shader {
     @Override
     protected void loadUniforms() {
 
+    }
+
+    @Override
+    public String getName() {
+        return "ShaderShadows";
     }
 }

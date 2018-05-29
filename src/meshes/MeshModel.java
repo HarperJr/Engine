@@ -1,9 +1,7 @@
 package meshes;
 
-import jdk.jfr.Category;
-import org.lwjgl.util.vector.Vector3f;
+import physics.Transform;
 import renderers.IRenderer;
-import renderers.Material;
 import renderers.MeshRenderer;
 import java.util.Arrays;
 import java.util.Collection;
@@ -11,7 +9,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 
-@Category("data")
 @SuppressWarnings("all")
 public class MeshModel {
     private final String name;
@@ -27,7 +24,7 @@ public class MeshModel {
 
         meshes = Arrays.asList(m);
         materials = getRenderers().stream().map(x -> ((MeshRenderer)x).getMaterial()).collect(Collectors.toList());
-        vertexCount = meshes.stream().mapToInt(Mesh::getVertexCount).sum();
+        vertexCount = meshes.stream().mapToInt(Mesh::getVerticesCount).sum();
         transform = new Transform();
     }
 

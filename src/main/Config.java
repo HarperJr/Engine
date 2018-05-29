@@ -9,14 +9,14 @@ public class Config {
 
     public static void initConfig() {
         try {
-            InputStream stream = ResourceLoader.getResourceSafety(CONFIG_SOURCE);
+            InputStream stream = Resources.getResourceSafety(CONFIG_SOURCE);
             try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream, "UTF-8"))) {
                 String line;
                 while ((line = bufferedReader.readLine()) != null) {
                     var configPar = line.trim().split(" ");
                     if (configPar.length <= 1) continue;
 
-                    configs.put(configPar[0], configPar[1]);
+                    configs.put(configPar[0].trim(), configPar[1].trim());
                 }
             }
         } catch (IOException ex) {

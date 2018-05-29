@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="dds-lwjgl">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/dds-lwjgl/dds-lwjgl.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

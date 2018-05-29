@@ -1,19 +1,18 @@
 package renderers;
 
+import meshes.Material;
 import meshes.Mesh;
+import org.joml.Vector2f;
+import org.joml.Vector3f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.*;
-import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector3f;
 import shaders.ShaderSurface;
 import util.MatrixUtils;
 import util.ShaderUtils;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 import java.util.ArrayDeque;
-import java.util.Arrays;
 import java.util.Deque;
-import java.util.List;
 import java.util.stream.Stream;
 
 public class MeshRenderer implements IRenderer {
@@ -38,7 +37,7 @@ public class MeshRenderer implements IRenderer {
 
     @Override
     public void render() {
-        ShaderSurface shader = material.getShader();
+        ShaderSurface shader = (ShaderSurface) material.getShader();
 
         ShaderUtils.useShader(shader);
         GL30.glBindVertexArray(vao);
@@ -64,7 +63,7 @@ public class MeshRenderer implements IRenderer {
         GL20.glEnableVertexAttribArray(ShaderSurface.TEXCOORD);
         GL20.glEnableVertexAttribArray(ShaderSurface.NORMAL);
 
-        GL11.glDrawElements(GL11.GL_TRIANGLES, mesh.getIndexCount(), GL11.GL_UNSIGNED_INT, 0);
+        GL11.glDrawElements(GL11.GL_TRIANGLES, mesh.getIndicesCount(), GL11.GL_UNSIGNED_INT, 0);
 
         GL20.glDisableVertexAttribArray(ShaderSurface.POSITION);
         GL20.glDisableVertexAttribArray(ShaderSurface.TEXCOORD);
@@ -101,9 +100,9 @@ public class MeshRenderer implements IRenderer {
 
     @Override
     public void flush() {
+        vbos.forEach(GL15::glDeleteBuffers);
         GL30.glDeleteVertexArrays(vao);
         materialBuffer.clear();
-        vbos.forEach(GL15::glDeleteBuffers);
     }
 
     private int createBufferObject() {
@@ -113,36 +112,36 @@ public class MeshRenderer implements IRenderer {
     }
 
     private IntBuffer getIndexBuffer() {
-        IntBuffer indexBuffer = BufferUtils.createIntBuffer(mesh.getIndexCount());
-        int[] indices = mesh.getIndices().stream().mapToInt(Integer::valueOf).toArray();
+        IntBuffer indexBuffer = BufferUtils.createIntBuffer(mesh.getIndicesCount());
+        int[] indices = mesh.getIndinces();
         indexBuffer.put(indices);
         return indexBuffer.flip();
     }
 
     @SuppressWarnings("all")
     private FloatBuffer getVertexBuffer() {
-        final float[] vertexArray = new float[mesh.getVertexCount() * BUFFER_BLOCK_SIZE];
+        final float[] vertexArray = new float[mesh.getVerticesCount() * BUFFER_BLOCK_SIZE];
 
-        List<Vector3f> vertices = mesh.getVertices();
-        List<Vector2f> texCoords = mesh.getTexCoords();
-        List<Vector3f> normals = mesh.getNormals();
+        Vector3f[] vertices = mesh.getVertices();
+        Vector2f[] texCoords = mesh.getTexCoords();
+        Vector3f[] normals = mesh.getNormals();
 
-        Stream.iterate(0, i -> i < mesh.getVertexCount(), i -> i + 1).forEach(i -> {
-            Vector3f vertexPos = vertices.get(i);
+        Stream.iterate(0, i -> i < mesh.getVerticesCount(), i -> i + 1).forEach(i -> {
+            Vector3f vertexPos = vertices[i];
 
             vertexArray[i * BUFFER_BLOCK_SIZE + BUFFER_POS_OFFSET + 0] = vertexPos.x;
             vertexArray[i * BUFFER_BLOCK_SIZE + BUFFER_POS_OFFSET + 1] = vertexPos.y;
             vertexArray[i * BUFFER_BLOCK_SIZE + BUFFER_POS_OFFSET + 2] = vertexPos.z;
 
-            if (texCoords.size() > 0) {
-                Vector2f texCoord = texCoords.get(i);
+            if (texCoords.length > 0) {
+                Vector2f texCoord = texCoords[i];
 
                 vertexArray[i * BUFFER_BLOCK_SIZE + BUFFER_TEXCOORD_OFFSET + 0] = texCoord.x;
                 vertexArray[i * BUFFER_BLOCK_SIZE + BUFFER_TEXCOORD_OFFSET + 1] = texCoord.y;
             }
 
-            if (normals.size() > 0) {
-                Vector3f normal = normals.get(i);
+            if (normals.length > 0) {
+                Vector3f normal = normals[i];
 
                 vertexArray[i * BUFFER_BLOCK_SIZE + BUFFER_NORMAL_OFFSET + 0] = normal.x;
                 vertexArray[i * BUFFER_BLOCK_SIZE + BUFFER_NORMAL_OFFSET + 1] = normal.y;

@@ -1,12 +1,11 @@
 package util;
 
+import org.joml.Matrix4f;
 import org.lwjgl.BufferUtils;
-import org.lwjgl.util.vector.Matrix4f;
-import org.lwjgl.util.vector.Vector3f;
-
 import java.nio.FloatBuffer;
 import java.util.ArrayDeque;
 import java.util.Queue;
+
 
 public final class MatrixUtils {
 
@@ -22,13 +21,13 @@ public final class MatrixUtils {
         final float xScale = ratio;
         final float frustum = far - near;
 
-        Matrix4f.setZero(projectionMatrix);
+        projectionMatrix.zero();
 
-        projectionMatrix.m00 = xScale;
-        projectionMatrix.m11 = yScale;
-        projectionMatrix.m22 = -(far + near) / frustum;
-        projectionMatrix.m23 = -1;
-        projectionMatrix.m32 = -(2 * near * far) / frustum;
+        projectionMatrix.m00(xScale);
+        projectionMatrix.m11(yScale);
+        projectionMatrix.m22(-(far + near) / frustum);
+        projectionMatrix.m23(-1);
+        projectionMatrix.m32(-(2 * near * far) / frustum);
     }
 
     public static void setOrtho(float left, float right, float bottom, float top, float near, float far) {
@@ -36,21 +35,22 @@ public final class MatrixUtils {
         final float xScale = 2f / (top - bottom);
         final float frustum = -2f / (far - near);
 
-        Matrix4f.setZero(projectionMatrix);
+        projectionMatrix.zero();
 
-        projectionMatrix.m00 = xScale;
-        projectionMatrix.m11 = yScale;
-        projectionMatrix.m22 = frustum;
-        projectionMatrix.m30 = -(right + left) / (right - left);
-        projectionMatrix.m31 = -(top + bottom) / (top - bottom);
-        projectionMatrix.m32 = -(far + near) / (far - near);
-        projectionMatrix.m33 = 1;
+        projectionMatrix.m00(xScale);
+        projectionMatrix.m11(yScale);
+        projectionMatrix.m22(frustum);
+        projectionMatrix.m30(-(right + left) / (right - left));
+        projectionMatrix.m31((top + bottom) / (top - bottom));
+        projectionMatrix.m32((far + near) / (far - near));
+        projectionMatrix.m33(1);
     }
 
     public static void pushMatrix() {
         Matrix4f mat = new Matrix4f();
-        Matrix4f.setIdentity(mat);
-        if (!matrixStack.isEmpty()) Matrix4f.load( matrixStack.peek(), mat);
+        if (!matrixStack.isEmpty()) {
+            mat.set(matrixStack.peek());
+        }
 
         addMatrixInStack(mat);
     }
@@ -61,37 +61,31 @@ public final class MatrixUtils {
     }
 
     public static void translate(float i, float j, float k) {
-        matrixStack.peek().translate(new Vector3f(i, j, k));
+        matrixStack.peek().translate(i, j, k);
     }
 
     public static void rotate(float a, float i, float j, float k) {
-        matrixStack.peek().rotate(a, new Vector3f(i, j, k));
+        matrixStack.peek().rotate(a, i, j, k);
     }
 
     public static void scale(float i, float j, float k) {
-        matrixStack.peek().scale(new Vector3f(i, j, k));
+
+        matrixStack.peek().scale(i, j, k);
     }
 
     public static FloatBuffer getProjectionMatrixAsBuffer() {
         projectionMatrixBuffer.clear();
-        projectionMatrix.store(projectionMatrixBuffer);
-        projectionMatrixBuffer.flip();
-        return projectionMatrixBuffer;
+        return projectionMatrix.get(projectionMatrixBuffer);
     }
 
     public static FloatBuffer getModelViewMatrixAsBuffer() {
         modelViewMatrixBuffer.clear();
         Matrix4f mat = identitiedMatrix;
-        Matrix4f.setIdentity(mat);
         if (!matrixStack.isEmpty()) mat = matrixStack.peek();
-
-        mat.store(modelViewMatrixBuffer);
-        modelViewMatrixBuffer.flip();
-        return modelViewMatrixBuffer;
+        return mat.get(modelViewMatrixBuffer);
     }
 
     private static void addMatrixInStack(Matrix4f mat) {
         matrixStack.add(mat);
     }
-
 }

@@ -2,9 +2,7 @@ package main;
 
 
 import meshes.MeshModel;
-import meshes.loaders.MeshImporter;
-import meshes.loaders.MeshImporterWaveFront;
-
+import meshes.importers.MeshImporter;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
@@ -13,6 +11,9 @@ import org.lwjgl.system.MemoryStack;
 import renderers.IRenderer;
 import shaders.ShaderShadows;
 import shaders.ShaderSurface;
+import shaders.ShaderUI;
+import shadows.ShadowMap;
+import ui.UI;
 import util.MatrixUtils;
 import util.ShaderUtils;
 import java.nio.IntBuffer;
@@ -28,43 +29,45 @@ public class Application {
 
     private boolean running;
 
-    private Timer timer;
-
+    static {
+        Config.initConfig();
+    }
+    
     public Application() {
         running = false;
-        timer = new Timer(60);
+       Timer.setTimerSpeed(60);
     }
 
     private void init() throws RuntimeException {
         GL.createCapabilities();
 
-        ShaderUtils.initShader(new ShaderSurface("ShaderSurface"));
-        ShaderUtils.initShader(new ShaderShadows("ShaderShadows"));
+        ShaderUtils.initShader(new ShaderSurface());
+        ShaderUtils.initShader(new ShaderShadows());
+        ShaderUtils.initShader(new ShaderUI());
 
         GL11.glEnable(GL11.GL_TEXTURE_2D);
         GL11.glEnable(GL11.GL_DEPTH_TEST);
 
         GL11.glClearColor(0.0f, 0.85f, 0.85f, 1.0f);
-
-        MatrixUtils.setPerspective(60f, (float)displayWidth / (float)displayHeight, 0.1f, 256f);
     }
 
     public void run() {
 
         try {
-            Config.initConfig();
-
             fullscreen = Config.getBool("fullscreen-mode");
             wnd = initDisplay("Engine", Config.getInt("display-width"), Config.getInt("display-height"), fullscreen);
             init();
 
             running = true;
 
-            MeshImporter loader = new MeshImporterWaveFront();
-            MeshModel mesh = loader.loadMeshModel("Stalker.obj");
+
+            //Content created for a while
+            MeshModel mesh = MeshImporter.loadModel("SentinelLingerie.obj");
             mesh.dispose();
 
+
             List<IRenderer> renderers = mesh.getRenderers();
+
 
             float angle = 0f;
             while (running) {
@@ -73,25 +76,30 @@ public class Application {
 
                 GL11.glClear(0x4100);
 
+                MatrixUtils.setPerspective(60f, (float)displayWidth / (float)displayHeight, 0.1f, 256f);
+
                 MatrixUtils.pushMatrix();
-                MatrixUtils.translate(0.0f, -1.0f, -3.8f);
+
+                MatrixUtils.translate(0f, -2.5f, -6.0f);
                 MatrixUtils.rotate(angle, 0f, 1f, 0f);
                 renderers.forEach(IRenderer::render);
 
                 MatrixUtils.popMatrix();
 
+
                 GLFW.glfwSwapBuffers(wnd);
 
-                angle = Math.min(angle + 15f * timer.getDelta(), 360f);
+                angle = Math.min(angle + 15f * Timer.getDelta(), 360f);
 
-                timer.update();
+                Timer.update();
                 GLFW.glfwPollEvents();
             }
             renderers.forEach(IRenderer::flush);
 
         } catch (RuntimeException ex) {
             ex.printStackTrace();
-        }finally {
+        }
+        finally {
             GLFW.glfwTerminate();
             ShaderUtils.deleteShaders();
         }
@@ -119,6 +127,9 @@ public class Application {
         GLFW.glfwWindowHint(GLFW.GLFW_RESIZABLE, GLFW.GLFW_TRUE);
 
         long window = GLFW.glfwCreateWindow(w, h, title, 0L, 0L);
+        displayWidth = w;
+        displayHeight = h;
+
         if (window == 0L) throw new RuntimeException("Unable to create window");
 
         if (fullscreen) {
@@ -155,4 +166,5 @@ public class Application {
     public int getDisplayHeight() {
         return displayHeight;
     }
+
 }

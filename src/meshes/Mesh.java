@@ -1,27 +1,27 @@
 package meshes;
 
-import jdk.jfr.Category;
-import org.lwjgl.util.vector.Vector2f;
-import org.lwjgl.util.vector.Vector3f;
+
+import org.joml.Vector2f;
+import org.joml.Vector3f;
 import renderers.IRenderer;
 import renderers.MeshRenderer;
-import util.DynamicList;
 
-import java.util.List;
-
-@Category("Data")
 @SuppressWarnings("all")
 public final class Mesh {
 
     private final String name;
 
-    private List<Vector3f> vertices = new DynamicList<>();
-    private List<Vector2f> texCoords = new DynamicList<>();
-    private List<Vector3f> normals = new DynamicList<>();
+    private Vector3f[] vertices;
+    private Vector2f[] texCoords;
+    private Vector3f[] normals;
 
-    private List<Integer> indices = new DynamicList<>();
+    private int[] indinces;
 
     private final IRenderer renderer;
+
+    public Mesh() {
+        this("Unnamed");
+    }
 
     public Mesh(String n) {
         name = n;
@@ -32,47 +32,41 @@ public final class Mesh {
         return name;
     }
 
-    public List<Vector3f> getVertices() {
+    public Vector3f[] getVertices() {
         return vertices;
     }
 
-    public void setVertices(DynamicList<Vector3f> vertices) {
+    public void setVertices(Vector3f[] vertices) {
         this.vertices = vertices;
     }
 
-    public List<Vector2f> getTexCoords() {
+    public Vector2f[] getTexCoords() {
         return texCoords;
     }
 
-    public void setTexCoords(DynamicList<Vector2f> texCoords) {
+    public void setTexCoords(Vector2f[] texCoords) {
         this.texCoords = texCoords;
     }
 
-    public List<Vector3f> getNormals() {
+    public Vector3f[] getNormals() {
         return normals;
     }
 
-    public void setNormals(DynamicList<Vector3f> normals) {
+    public void setNormals(Vector3f[] normals) {
         this.normals = normals;
     }
 
-    public List<Integer> getIndices() {
-        return indices;
+    public int[] getIndinces() {
+        return indinces;
     }
 
-    public void setIndices(DynamicList<Integer> indices) {
-        this.indices = indices;
+    public void setIndinces(int[] indinces) {
+        this.indinces = indinces;
     }
 
-    public int getIndexCount() {
+    public int getVerticesCount() { return vertices.length; }
 
-        return indices.size();
-    }
-
-    public int getVertexCount() {
-
-        return vertices.size();
-    }
+    public int getIndicesCount() { return indinces.length; }
 
     public IRenderer getRenderer() {
 
